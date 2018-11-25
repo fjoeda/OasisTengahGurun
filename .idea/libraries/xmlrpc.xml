@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="xmlrpc">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Downloads/xmlrpc" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$USER_HOME$/Downloads/xmlrpc" recursive="false" />
+  </library>
+</component>
