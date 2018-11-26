@@ -88,7 +88,8 @@ public class Transaction {
                 lock(idAsal);
                 lock(idTujuan);
                 int saldoAsal = dbHandler.getSaldoFromId(idAsal)-Saldo;
-                int saldoTujuan = dbHandler.getSaldoFromId(idTujuan)-Saldo;
+                int saldoTujuan = dbHandler.getSaldoFromId(idTujuan)+Saldo;
+
                 dbHandler.updateInstance(idAsal,dbHandler.getNameFromId(idAsal),saldoAsal,idAsal);
                 dbHandler.updateInstance(idTujuan,dbHandler.getNameFromId(idTujuan),saldoTujuan,idTujuan);
                 unlock(idAsal);
@@ -104,5 +105,35 @@ public class Transaction {
             return false;
         }
 
+    }
+
+    public int getSaldo(int id){
+
+        try {
+            return dbHandler.getSaldoFromId(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -2;
+        }
+    }
+
+    public int getLock(int id){
+
+        try {
+            return dbHandler.getLockFromId(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -2;
+        }
+    }
+
+    public String getName(int id){
+
+        try {
+            return dbHandler.getNameFromId(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "-2";
+        }
     }
 }

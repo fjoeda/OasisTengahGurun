@@ -78,69 +78,89 @@ public class DatabaseHandler {
     }
 
     public void updateInstance(int NoRek, String name, int Saldo, int Lock) throws SQLException{
-        if(conn==null){
-            conn = DriverManager.getConnection(urlMaster);
-            String sql = "UPDATE BankDB  SET  Nama = ?, Saldo = ?, Lock = ? WHERE NomorRek = ?";
+        //if(conn==null){
+            //conn = DriverManager.getConnection(urlMaster);
+            attach();
+            String sql = "UPDATE main.BankDB  SET  Nama = ?, Saldo = ?, Lock = ? WHERE NomorRek = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1,NoRek);
-            pstmt.setString(2,name);
-            pstmt.setInt(3,Saldo);
-            pstmt.setInt(4,Lock);
+            pstmt.setString(1,name);
+            pstmt.setInt(2,Saldo);
+            pstmt.setInt(3,Lock);
+            pstmt.setInt(4,NoRek);
             pstmt.execute();
             conn.close();
-        }
+            replicate();
+        //}
     }
 
     public void deleteInstance(int NoRek) throws SQLException{
         if(conn==null){
-            conn = DriverManager.getConnection(urlMaster);
-            String sql = "DELETE FROM BankDB WHERE id = ?";
+            //conn = DriverManager.getConnection(urlMaster);
+            attach();
+            String sql = "DELETE FROM main.BankDB WHERE id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,NoRek);
             pstmt.execute();
             conn.close();
+            replicate();
         }
     }
 
     public String getNameFromId(int Id) throws SQLException{
-        if(conn==null){
-            conn = DriverManager.getConnection(urlMaster);
-            String sql = "SELECT Nama FROM BankDB WHERE NomorRek = ?";
+        //if(conn==null){
+            //conn = DriverManager.getConnection(urlMaster);
+            attach();
+            String sql = "SELECT * FROM main.BankDB WHERE NomorRek = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,Id);
             ResultSet resultSet = pstmt.executeQuery();
+            String Result = "";
+            while (resultSet.next()){
+                Result = resultSet.getString("Nama");
+            }
             conn.close();
-            return resultSet.getString("Nama");
-        }else {
-            return null;
-        }
+            return Result;
+        //}else {
+       //     return null;
+        //}
     }
 
     public int getSaldoFromId(int Id) throws SQLException{
-        if(conn==null){
-            conn = DriverManager.getConnection(urlMaster);
-            String sql = "SELECT Saldo FROM BankDB WHERE NomorRek = ?";
+        //if(conn==null){
+            //conn = DriverManager.getConnection(urlMaster);
+            attach();
+            String sql = "SELECT * FROM BankDB WHERE NomorRek = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,Id);
             ResultSet resultSet = pstmt.executeQuery();
+            int Result = -1;
+            while (resultSet.next()){
+                Result = resultSet.getInt("Saldo");
+            }
+
             conn.close();
-            return resultSet.getInt("Saldo");
-        }else {
-            return -1;
-        }
+            return Result;
+       // }else {
+         //   return -1;
+        //}
 
     }
 
     public int getLockFromId(int Id) throws SQLException{
-        if(conn==null){
-            conn = DriverManager.getConnection(urlMaster);
-            String sql = "SELECT Lock FROM BankDB WHERE NomorRek = ?";
+       // if(conn==null){
+            attach();
+            //conn = DriverManager.getConnection(urlMaster);
+            String sql = "SELECT * FROM main.BankDB WHERE NomorRek = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,Id);
             ResultSet resultSet = pstmt.executeQuery();
+            int Result = -1;
+            while (resultSet.next()){
+                Result = resultSet.getInt("Lock");
+            }
             conn.close();
-            return resultSet.getInt("Lock");
-        }else return -1;
+            return Result;
+        //}else return -1;
 
     }
 

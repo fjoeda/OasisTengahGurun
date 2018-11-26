@@ -17,10 +17,6 @@ import java.net.InetAddress;
 public class Console extends Application{
 
 
-    public Integer sum(int x, int y){
-        return new Integer(x+y);
-    }
-
     InetAddress ip;
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -36,6 +32,7 @@ public class Console extends Application{
             phm.addHandler("Calculate",TransactionHandler.CalculationHandler.class);
 
             phm.addHandler("Transaction",TransactionHandler.Transaction.class);
+            phm.addHandler("Transaction2",TransactionHandler.DatabaseHandler.class);
             xmlServer.setHandlerMapping(phm);
 
             XmlRpcServerConfigImpl serverConfig =
